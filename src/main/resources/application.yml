@@ -1,0 +1,28 @@
+server:
+  port: 10001
+
+spring:
+  rabbitmq:
+    addresses: 127.0.0.1
+    port: 5672
+    virtual-host: /
+    username: admin
+    password: admin
+    #连接超时时间
+    connection-timeout: 15000
+    # CORRELATED值是发布消息成功到交换器后会触发回调
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    #消费端配置
+    listener:
+      simple:
+        #消费端
+        concurrency: 5
+        #最大消费端数
+        max-concurrency: 10
+        #自动签收auto  手动 manual
+        acknowledge-mode: manual
+        #限流（海量数据，同时只能过来一条）
+        prefetch: 1
